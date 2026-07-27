@@ -9,8 +9,6 @@ pygame.init()
 
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('Змейка')
-icon = pygame.image.load('imgs/51c682403e35afce960e7e039d68bd8d_t.jpeg')
-# pygame.display.set_icon(icon)
 
 
 square = pygame.Surface((20, 20))
