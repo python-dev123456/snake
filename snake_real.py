@@ -12,10 +12,17 @@ screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('Змейка')
 
 
-square = pygame.Surface((20, 20))
-square.fill((36,255,20))
+snake = pygame.Surface((20, 20))
+snake.fill((36,255,20))
+snake1 = pygame.Surface((20, 20))
+snake1.fill((0, 0, 255))
 snake_x = 400
 snake_y = 300
+
+
+
+snake_els = []
+
 
 
 dx = +20
@@ -29,10 +36,11 @@ apple.fill((255, 0, 0))
 
 
 
-apple_x = random.randint(0, 800)
-apple_y = random.randint(0, 600)
+apple_x = random.randint(0, 39) * 20
+apple_y = random.randint(0, 29) * 20
 
 
+old_head_pos = []
 
 
 running = True
@@ -42,8 +50,9 @@ running = True
 
 while running:
     screen.fill(('black'))
-    screen.blit(square, (snake_x, snake_y))
     screen.blit(apple, (apple_x, apple_y))
+    old_head_pos.insert(0, (snake_x, snake_y))
+
 
 
 
@@ -66,6 +75,19 @@ while running:
         dy = 20
     snake_x += dx
     snake_y += dy
+    screen.blit(snake, (snake_x, snake_y))
+
+
+    if apple_x == snake_x and apple_y == snake_y:
+        apple_x = random.randint(0, 39) * 20
+        apple_y = random.randint(0, 29) * 20
+    else:
+        old_head_pos.pop()
+
+    
+    if old_head_pos:
+        for i in old_head_pos:
+            screen.blit(snake, (i))
 
 
 
@@ -74,21 +96,24 @@ while running:
         pygame.quit()
     if snake_y < 0 or snake_y > 600:
         running = False
+
+    if running == False:
         pygame.quit()
+    else:
 
 
 
 
 
-    pygame.display.update()
+        pygame.display.update()
 
 
 
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-            pygame.quit()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
 
 
 
